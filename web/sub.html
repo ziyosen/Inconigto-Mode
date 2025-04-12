@@ -968,24 +968,14 @@ select.form-control {
   uuid: ${uuid}
   cipher: auto
   tls: ${tls}
-  client-fingerprint: chrome
   udp: false
   skip-cert-verify: true
   network: ws
   servername: ${sni}
-  alpn:
-    - h2
-    - h3
-    - http/1.1
   ws-opts:
     path: /${PATH_PREFIX}/${proxyHost}-${proxyPort}
     headers:
-      Host: ${host}
-    max-early-data: 0
-    early-data-header-name: Sec-WebSocket-Protocol
-    ip-version: dual
-    v2ray-http-upgrade: false
-    v2ray-http-upgrade-fast-open: false`;
+      Host: ${host}`;
 }
 
     // Generate Clash YAML for Trojan
@@ -995,25 +985,14 @@ select.form-control {
   port: ${tls ? 443 : 80}
   type: trojan
   password: ${uuid}
-  tls: ${tls}
-  client-fingerprint: chrome
   udp: false
   skip-cert-verify: true
   network: ws
   sni: ${sni}
-  alpn:
-    - h2
-    - h3
-    - http/1.1
   ws-opts:
     path: /${PATH_PREFIX}/${proxyHost}-${proxyPort}
     headers:
-      Host: ${host}
-    max-early-data: 0
-    early-data-header-name: Sec-WebSocket-Protocol
-    ip-version: dual
-    v2ray-http-upgrade: false
-    v2ray-http-upgrade-fast-open: false`;
+      Host: ${host}`;
 }
 
     // Generate Clash YAML for Shadowsocks
