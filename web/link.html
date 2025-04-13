@@ -1267,7 +1267,8 @@ const bugOptions = [
     { value: 'ava.game.naver.com', label: 'ava.game.naver.com' },
     { value: 'graph.instagram.com', label: 'graph.instagram.com' },
     { value: 'support.zoom.us', label: 'support.zoom.us' },
-    { value: 'help.viu.com', label: 'help.viu.com' }
+    { value: 'help.viu.com', label: 'help.viu.com' },
+    { value: 'manual', label: 'Type Manual' }
 ];
 
 // DOM elements
@@ -1495,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formType = form.id.split('-')[0]; // vmess, vless, trojan, or ss
             
             // Get custom bug and wildcard values
-            const customBug = formData.get('bug') ? formData.get('bug').toString().trim() : '';
+            let customBug = formData.get('bug') ? formData.get('bug').toString().trim() : '';
             
             // If manual bug is selected, use the manual input value instead
             if (customBug === 'manual') {
@@ -1503,8 +1504,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const manualBugValue = document.getElementById(manualInputId).value.trim();
                 if (manualBugValue) {
                     formData.set('bug', manualBugValue);
+                    // Update customBug with the manual value for server address
+                    customBug = manualBugValue;
                 } else {
                     formData.set('bug', ''); // Reset to empty if manual field is empty
+                    customBug = ''; // Also update customBug variable
                 }
             }
             
