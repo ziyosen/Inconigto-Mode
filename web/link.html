@@ -900,14 +900,8 @@
                             <div>
                                 <label for="vmess-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
                                 <select id="vmess-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
-                                    <option value="">Default</option>
-                                    <option value="cache.netflix.com">cache.netflix.com</option>
-                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
-                                    <option value="graph.instagram.com">graph.instagram.com</option>
-                                    <option value="support.zoom.us">support.zoom.us</option>
-                                    <option value="help.viu.com">help.viu.com</option>
-                                    <option value="manual">Type Manual</option>
-                                </select>
+    <!-- Options will be populated dynamically -->
+</select>
                                 <div id="vmess-manual-bug-container" class="wildcard-container">
                                     <input type="text" id="vmess-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
                                 </div>
@@ -969,14 +963,8 @@
                             <div>
                                 <label for="vless-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
                                 <select id="vless-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
-                                    <option value="">Default</option>
-                                    <option value="cache.netflix.com">cache.netflix.com</option>
-                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
-                                    <option value="graph.instagram.com">graph.instagram.com</option>
-                                    <option value="support.zoom.us">support.zoom.us</option>
-                                    <option value="help.viu.com">help.viu.com</option>
-                                    <option value="manual">Type Manual</option>
-                                </select>
+    <!-- Options will be populated dynamically -->
+</select>
                                 <div id="vless-manual-bug-container" class="wildcard-container">
                                     <input type="text" id="vless-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
                                 </div>
@@ -1038,14 +1026,8 @@
                             <div>
                                 <label for="trojan-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
                                 <select id="trojan-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
-                                    <option value="">Default</option>
-                                    <option value="cache.netflix.com">cache.netflix.com</option>
-                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
-                                    <option value="graph.instagram.com">graph.instagram.com</option>
-                                    <option value="support.zoom.us">support.zoom.us</option>
-                                    <option value="help.viu.com">help.viu.com</option>
-                                    <option value="manual">Type Manual</option>
-                                </select>
+    <!-- Options will be populated dynamically -->
+</select>
                                 <div id="trojan-manual-bug-container" class="wildcard-container">
                                     <input type="text" id="trojan-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
                                 </div>
@@ -1106,14 +1088,8 @@
                             <div>
                                 <label for="ss-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
                                 <select id="ss-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
-                                    <option value="">Default</option>
-                                    <option value="cache.netflix.com">cache.netflix.com</option>
-                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
-                                    <option value="graph.instagram.com">graph.instagram.com</option>
-                                    <option value="support.zoom.us">support.zoom.us</option>
-                                    <option value="help.viu.com">help.viu.com</option>
-                                    <option value="manual">Type Manual</option>
-                                </select>
+    <!-- Options will be populated dynamically -->
+</select>
                                 <div id="ss-manual-bug-container" class="wildcard-container">
                                     <input type="text" id="ss-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
                                 </div>
@@ -1284,6 +1260,17 @@ const defaultUUID = 'bbbbbbbb-cccc-4ddd-eeee-ffffffffffff';
 const itemsPerPage = 10;
 let currentPage = 1;
 
+// Array of bug options for easy management
+const bugOptions = [
+    { value: '', label: 'Default' },
+    { value: 'cache.netflix.com', label: 'cache.netflix.com' },
+    { value: 'ava.game.naver.com', label: 'ava.game.naver.com' },
+    { value: 'graph.instagram.com', label: 'graph.instagram.com' },
+    { value: 'support.zoom.us', label: 'support.zoom.us' },
+    { value: 'help.viu.com', label: 'help.viu.com' },
+    { value: 'manual', label: 'Type Manual' }
+];
+
 // DOM elements
 const proxyListSection = document.getElementById('proxy-list-section');
 const accountCreationSection = document.getElementById('account-creation-section');
@@ -1296,6 +1283,31 @@ const proxyUrlInput = document.getElementById('proxy-url');
 const paginationContainer = document.getElementById('pagination-container');
 const proxyCountInfo = document.getElementById('proxy-count-info');
 const searchInput = document.getElementById('search-input');
+
+// Function to populate bug select dropdowns
+function populateBugOptions() {
+    const bugSelects = [
+        document.getElementById('vmess-bug'),
+        document.getElementById('vless-bug'),
+        document.getElementById('trojan-bug'),
+        document.getElementById('ss-bug')
+    ];
+    
+    bugSelects.forEach(select => {
+        if (select) {
+            // Clear existing options
+            select.innerHTML = '';
+            
+            // Add options from the array
+            bugOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.label;
+                select.appendChild(optionElement);
+            });
+        }
+    });
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -1408,6 +1420,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    
+    // Populate bug options dropdowns
+    populateBugOptions();
     
     // Form submissions
     const forms = [
@@ -2181,12 +2196,23 @@ function showAccountCreationSection() {
 
 // Helper functions
 function generateUUID(elementId) {
-    document.getElementById(elementId).value = defaultUUID;
+    // Generate a proper random UUID v4
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+    document.getElementById(elementId).value = uuid;
 }
 
 function generatePassword(elementId) {
-    // Set password to the default UUID instead of generating a random one
-    document.getElementById(elementId).value = defaultUUID;
+    // Generate a proper random UUID v4 for password
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+    document.getElementById(elementId).value = uuid;
 }
 
 // Update the loadProxyList function to better handle GitHub data and CORS issues
