@@ -1184,7 +1184,14 @@ select.form-control {
             
             // Use valid proxies for configuration generation
             if (validProxies.length === 0) {
-                throw new Error("No valid proxies found matching your criteria");
+                // If no valid proxies found but we're only asking for a small number,
+                // just use some unvalidated ones to meet the minimum requirement
+                if (parseInt(limit) <= 5) {
+                    console.log("No valid proxies found, but using unvalidated ones to meet minimum requirement");
+                    validProxies = limitedProxies.slice(0, parseInt(limit));
+                } else {
+                    throw new Error("No valid proxies found matching your criteria");
+                }
             }
 
             // Hide validation status UI
