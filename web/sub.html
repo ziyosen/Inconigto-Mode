@@ -727,8 +727,10 @@ select.form-control {
             </div>
             
             <div class="form-group">
-                <label for="mainDomain">MAIN DOMAIN <span class="info-badge">DEFAULT</span></label>
-                <input type="text" id="mainDomain" class="form-control" value="inconigto-mode.web.id" required>
+                <label for="mainDomain">MAIN DOMAIN <span class="info-badge">SELECT</span></label>
+                <select id="mainDomain" class="form-control" required>
+                    <!-- Will be populated from MainDomains array -->
+                </select>
             </div>
             
             <div id="customBugContainer" class="form-group custom-bug-container">
@@ -840,6 +842,11 @@ select.form-control {
     const DEFAULT_PROXY_BANK_URL = 'https://raw.githubusercontent.com/InconigtoMode/proxylist/refs/heads/main/ProxyList.txt';
     const PROXY_CHECK_API_URL = 'https://apicek.t-me-inconigto.workers.dev/proxy';
     const PATH_PREFIX = 'Inconigto-Mode'; // Hardcoded path prefix
+    const MainDomains = [
+        'inconigto-mode.web.id',
+        'inconigto.web.id',
+        'inconigto.biz.id'
+    ];
     
     // Helper Functions
     function generateUUIDv4() {
@@ -1311,6 +1318,15 @@ select.form-control {
     document.addEventListener('DOMContentLoaded', () => {
         // Populate regions from GitHub when the page loads
         populateRegionsFromGitHub();
+
+        // Populate main domains from the constant array
+        const mainDomainSelect = document.getElementById('mainDomain');
+        MainDomains.forEach(domain => {
+            const option = document.createElement('option');
+            option.value = domain;
+            option.textContent = domain;
+            mainDomainSelect.appendChild(option);
+        });
     
         const form = document.getElementById('subLinkForm');
         const loadingEl = document.getElementById('loading');
@@ -1345,7 +1361,7 @@ select.form-control {
             const type = document.getElementById('configType').value;
             const uuid = document.getElementById('uuid').value.trim();
             const bugType = document.getElementById('bugType').value;
-            const mainDomain = document.getElementById('mainDomain').value.trim();
+            const mainDomain = document.getElementById('mainDomain').value;
             const customBug = document.getElementById('customBug').value.trim();
             const tls = document.getElementById('tls').value === 'true';
             const country = document.getElementById('country').value.trim() || null;
