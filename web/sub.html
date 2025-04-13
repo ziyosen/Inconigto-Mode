@@ -1167,15 +1167,39 @@ select.form-control {
             if (validProxies.length === 0) {
                 throw new Error("No valid proxies found matching your criteria");
             }
-            
+
             // Hide validation status UI
             document.getElementById('validation-status').style.display = 'none';
-            
+
             // Show loading again for config generation
             document.getElementById('loading').style.display = 'block';
-            
-            // Use the valid proxies for configuration
-            limitedProxies = validProxies;
+
+            // If we have fewer valid proxies than requested, add some unvalidated ones to meet the requested limit
+            if (validProxies.length < parseInt(limit)) {
+                // Get all proxy hosts we've already validated (both valid and invalid)
+                const allValidatedHosts = new Set(limitedProxies.map(line => line.split(',')[0]));
+                
+                // Find completely new proxies that haven't been validated at all
+                const newProxies = proxyList.filter(line => {
+                    const host = line.split(',')[0];
+                    return !allValidatedHosts.has(host);
+                });
+                
+                // Add enough new proxies to reach the requested limit
+                const neededCount = parseInt(limit) - validProxies.length;
+                const additionalProxies = newProxies.slice(0, neededCount);
+                
+                // Combine valid proxies with new ones
+                limitedProxies = [...validProxies, ...additionalProxies];
+                
+                // Make sure we don't exceed the requested limit
+                limitedProxies = limitedProxies.slice(0, parseInt(limit));
+                
+                console.log(`Using ${validProxies.length} validated proxies and ${additionalProxies.length} new proxies`);
+            } else {
+                // Use just the valid proxies (might be fewer than requested if we don't have enough new ones)
+                limitedProxies = validProxies.slice(0, parseInt(limit));
+            }
         }
         
         // For Clash format, we'll collect all proxies under a single header
