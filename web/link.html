@@ -899,7 +899,18 @@
                             
                             <div>
                                 <label for="vmess-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="vmess-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="vmess-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <option value="">Default</option>
+                                    <option value="cache.netflix.com">cache.netflix.com</option>
+                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
+                                    <option value="graph.instagram.com">graph.instagram.com</option>
+                                    <option value="support.zoom.us">support.zoom.us</option>
+                                    <option value="help.viu.com">help.viu.com</option>
+                                    <option value="manual">Type Manual</option>
+                                </select>
+                                <div id="vmess-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="vmess-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="vmess-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="vmess-wildcard" name="wildcard">
@@ -957,7 +968,18 @@
                             
                             <div>
                                 <label for="vless-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="vless-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="vless-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <option value="">Default</option>
+                                    <option value="cache.netflix.com">cache.netflix.com</option>
+                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
+                                    <option value="graph.instagram.com">graph.instagram.com</option>
+                                    <option value="support.zoom.us">support.zoom.us</option>
+                                    <option value="help.viu.com">help.viu.com</option>
+                                    <option value="manual">Type Manual</option>
+                                </select>
+                                <div id="vless-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="vless-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="vless-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="vless-wildcard" name="wildcard">
@@ -1015,7 +1037,18 @@
                             
                             <div>
                                 <label for="trojan-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="trojan-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="trojan-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <option value="">Default</option>
+                                    <option value="cache.netflix.com">cache.netflix.com</option>
+                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
+                                    <option value="graph.instagram.com">graph.instagram.com</option>
+                                    <option value="support.zoom.us">support.zoom.us</option>
+                                    <option value="help.viu.com">help.viu.com</option>
+                                    <option value="manual">Type Manual</option>
+                                </select>
+                                <div id="trojan-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="trojan-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="trojan-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="trojan-wildcard" name="wildcard">
@@ -1072,7 +1105,18 @@
                             
                             <div>
                                 <label for="ss-bug" class="block text-sm font-medium text-gray-300 mb-2">Custom Bug <span class="text-xs text-gray-500">(opsional)</span></label>
-                                <input type="text" id="ss-bug" name="bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm" placeholder="e.g. bug.com">
+                                <select id="ss-bug" name="bug" class="w-full px-4 py-2.5 glass-select rounded-lg text-sm">
+                                    <option value="">Default</option>
+                                    <option value="cache.netflix.com">cache.netflix.com</option>
+                                    <option value="ava.game.naver.com">ava.game.naver.com</option>
+                                    <option value="graph.instagram.com">graph.instagram.com</option>
+                                    <option value="support.zoom.us">support.zoom.us</option>
+                                    <option value="help.viu.com">help.viu.com</option>
+                                    <option value="manual">Type Manual</option>
+                                </select>
+                                <div id="ss-manual-bug-container" class="wildcard-container">
+                                    <input type="text" id="ss-manual-bug" class="w-full px-4 py-2.5 glass-input rounded-lg text-sm mt-2" placeholder="Enter custom bug domain">
+                                </div>
                                 <div id="ss-wildcard-container" class="wildcard-container">
                                     <div class="checkbox-container">
                                         <input type="checkbox" id="ss-wildcard" name="wildcard">
@@ -1395,17 +1439,38 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('ss-wildcard')
     ];
 
-    // Add event listeners to bug inputs
-    bugInputs.forEach((input, index) => {
-        input.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                wildcardContainers[index].classList.add('show');
-            } else {
-                wildcardContainers[index].classList.remove('show');
-                wildcardCheckboxes[index].checked = false;
-            }
-        });
+    // Add event listeners to bug selects
+    bugInputs.forEach((select, index) => {
+    const manualContainerId = select.id.replace('-bug', '-manual-bug-container');
+    const manualContainer = document.getElementById(manualContainerId);
+    const manualInput = document.getElementById(select.id.replace('-bug', '-manual-bug'));
+    const wildcardCheckbox = wildcardCheckboxes[index];
+    
+    select.addEventListener('change', function() {
+        if (this.value === 'manual') {
+            manualContainer.classList.add('show');
+            wildcardContainers[index].classList.remove('show'); // Hide wildcard container
+            wildcardCheckbox.checked = false; // Uncheck the wildcard checkbox
+            wildcardCheckbox.disabled = true; // Disable the wildcard checkbox
+        } else if (this.value !== '') {
+            manualContainer.classList.remove('show');
+            wildcardContainers[index].classList.add('show');
+            wildcardCheckbox.disabled = false; // Enable the wildcard checkbox
+        } else {
+            manualContainer.classList.remove('show');
+            wildcardContainers[index].classList.remove('show');
+            wildcardCheckbox.checked = false;
+            wildcardCheckbox.disabled = false; // Reset the disabled state
+        }
     });
+    
+    if (manualInput) {
+        manualInput.addEventListener('input', function() {
+            // Don't show wildcard container for manual input
+            wildcardCheckbox.disabled = true;
+        });
+    }
+});
 
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -1417,6 +1482,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Get custom bug and wildcard values
             const customBug = formData.get('bug') ? formData.get('bug').toString().trim() : '';
+            
+            // If manual bug is selected, use the manual input value instead
+            if (customBug === 'manual') {
+                const manualInputId = `${formType}-manual-bug`;
+                const manualBugValue = document.getElementById(manualInputId).value.trim();
+                if (manualBugValue) {
+                    formData.set('bug', manualBugValue);
+                } else {
+                    formData.set('bug', ''); // Reset to empty if manual field is empty
+                }
+            }
+            
             const useWildcard = formData.get('wildcard') === 'on';
             
             // Determine server, host, and SNI based on custom bug and wildcard
