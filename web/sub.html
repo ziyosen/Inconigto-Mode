@@ -677,6 +677,13 @@ select.form-control {
     font-size: 0.9rem;
     cursor: pointer;
 }
+
+.select-info {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+    margin-top: 0.3rem;
+    font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -735,7 +742,8 @@ select.form-control {
             
             <div id="customBugContainer" class="form-group custom-bug-container">
                 <label for="customBug">CUSTOM BUG</label>
-                <input type="text" id="customBug" class="form-control" placeholder="e.g., google.com">
+                <input type="text" id="customBug" class="form-control" placeholder="e.g., google.com, youtube.com, instagram.com">
+                <div class="select-info">Separate multiple domains with commas</div>
             </div>
             
             <div class="form-group">
@@ -847,6 +855,8 @@ select.form-control {
         'inconigto.web.id',
         'inconigto.biz.id'
     ];
+
+    const CustomBugs = [];
     
     // Helper Functions
     function generateUUIDv4() {
@@ -1049,7 +1059,7 @@ select.form-control {
 }
     
     // Main Function
-    async function generateV2raySub(type, uuid, bugType, mainDomain, customBug, tls, validateProxies, formatType, country = null, limit = null) {
+    async function generateV2raySub(type, uuid, bugType, mainDomain, customBugs, tls, validateProxies, formatType, country = null, limit = null) {
     try {
         const response = await fetch(DEFAULT_PROXY_BANK_URL);
         if (!response.ok) {
@@ -1076,11 +1086,13 @@ select.form-control {
         }
         
         // Apply limit to the filtered list before validation
-        // This ensures we only validate the number of proxies we actually need
         let limitedProxies = filteredProxies;
         if (limit && !isNaN(limit) && limit > 0) {
             limitedProxies = filteredProxies.slice(0, parseInt(limit));
         }
+        
+        // Use the first bug if available, otherwise use the main domain
+        const firstBug = customBugs && customBugs.length > 0 ? customBugs[0] : null;
         
         // Determine domain, host, and SNI based on bug type
         let domain, host, sni;
@@ -1092,17 +1104,17 @@ select.form-control {
                 sni = mainDomain;
                 break;
             case 'non-wildcard':
-                domain = customBug || mainDomain;
+                domain = firstBug || mainDomain;
                 host = mainDomain;
                 sni = mainDomain;
                 break;
             case 'wildcard':
-                domain = customBug || mainDomain;
-                host = `${customBug}.${mainDomain}`;
-                sni = `${customBug}.${mainDomain}`;
+                domain = firstBug || mainDomain;
+                host = `${firstBug}.${mainDomain}`;
+                sni = `${firstBug}.${mainDomain}`;
                 break;
         }
-        
+
         const results = [];
         let validProxies = [];
         
@@ -1220,28 +1232,56 @@ select.form-control {
                 
                 const [proxyHost, proxyPort, countryCode, ...ispParts] = parts;
                 const isp = ispParts.join(' ') || 'Unknown';
-                const name = `${countryCode} - ${isp} ${i+1}`;
                 
-                switch (type) {
-                    case 'vless':
-                        allProxies.push(generateClashVLESS(`${name}-[VLESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        break;
-                    case 'vmess':
-                        allProxies.push(generateClashVMess(`${name}-[VMESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        break;
-                    case 'trojan':
-                        allProxies.push(generateClashTrojan(`${name}-[TROJAN-${tls ? 'TLS' : 'NTLS'}]`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        break;
-                    case 'shadowsocks':
-                        allProxies.push(generateClashSS(`${name}-[SS-${tls ? 'TLS' : 'NTLS'}]`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        break;
-                    case 'mix':
-                        const mixIndex = i + 1;
-                        allProxies.push(generateClashVLESS(`${countryCode} - ${isp}-[VLESS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.1`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        allProxies.push(generateClashTrojan(`${countryCode} - ${isp}-[TROJAN-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.2`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        allProxies.push(generateClashSS(`${countryCode} - ${isp}-[SS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.3`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        allProxies.push(generateClashVMess(`${countryCode} - ${isp}-[VMESS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.4`, uuid, domain, host, sni, proxyHost, proxyPort, tls));
-                        break;
+                // If we have multiple bugs, create configs for each bug
+                const bugsToUse = customBugs && customBugs.length > 0 ? customBugs : [mainDomain];
+                
+                for (const bug of bugsToUse) {
+                    // Determine domain, host, and SNI for this specific bug
+                    let bugDomain, bugHost, bugSni;
+                    
+                    switch (bugType) {
+                        case 'default':
+                            bugDomain = mainDomain;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'non-wildcard':
+                            bugDomain = bug;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'wildcard':
+                            bugDomain = bug;
+                            bugHost = `${bug}.${mainDomain}`;
+                            bugSni = `${bug}.${mainDomain}`;
+                            break;
+                    }
+                    
+                    const bugLabel = bug !== mainDomain ? `[${bug}]` : '';
+                    const name = `${countryCode} - ${isp} ${bugLabel} ${i+1}`;
+                    
+                    switch (type) {
+                        case 'vless':
+                            allProxies.push(generateClashVLESS(`${name}-[VLESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            break;
+                        case 'vmess':
+                            allProxies.push(generateClashVMess(`${name}-[VMESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            break;
+                        case 'trojan':
+                            allProxies.push(generateClashTrojan(`${name}-[TROJAN-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            break;
+                        case 'shadowsocks':
+                            allProxies.push(generateClashSS(`${name}-[SS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            break;
+                        case 'mix':
+                            const mixIndex = i + 1;
+                            allProxies.push(generateClashVLESS(`${countryCode} - ${isp} ${bugLabel}-[VLESS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.1`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            allProxies.push(generateClashTrojan(`${countryCode} - ${isp} ${bugLabel}-[TROJAN-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.2`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            allProxies.push(generateClashSS(`${countryCode} - ${isp} ${bugLabel}-[SS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.3`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            allProxies.push(generateClashVMess(`${countryCode} - ${isp} ${bugLabel}-[VMESS-${tls ? 'TLS' : 'NTLS'}] ${mixIndex}.4`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls));
+                            break;
+                    }
                 }
             }
             
@@ -1256,53 +1296,80 @@ select.form-control {
                 const [proxyHost, proxyPort, countryCode, ...ispParts] = parts;
                 const isp = ispParts.join(' ') || 'Unknown';
                 
-                let config;
+                // If we have multiple bugs, create configs for each bug
+                const bugsToUse = customBugs && customBugs.length > 0 ? customBugs : [mainDomain];
                 
-                switch (type) {
-                    case 'vless': 
-                        const vlessLabel = formatLabel(countryCode, isp, 'VLESS', tls);
-                        config = `vless://${uuid}@${domain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(vlessLabel)}`;
-                        break;
+                for (const bug of bugsToUse) {
+                    // Determine domain, host, and SNI for this specific bug
+                    let bugDomain, bugHost, bugSni;
                     
-                    case 'vmess': 
-                        const vmessConfig = createVMessConfig(uuid, domain, host, sni, proxyHost, proxyPort, countryCode, isp, tls);
-                        const vmessString = JSON.stringify(vmessConfig);
-                        config = `vmess://${safeBase64Encode(vmessString)}`;
-                        break;
+                    switch (bugType) {
+                        case 'default':
+                            bugDomain = mainDomain;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'non-wildcard':
+                            bugDomain = bug;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'wildcard':
+                            bugDomain = bug;
+                            bugHost = `${bug}.${mainDomain}`;
+                            bugSni = `${bug}.${mainDomain}`;
+                            break;
+                    }
                     
-                    case 'trojan': 
-                        const trojanLabel = formatLabel(countryCode, isp, 'TROJAN', tls);
-                        config = `trojan://${uuid}@${domain}:${tls ? 443 : 80}?security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(trojanLabel)}`;
-                        break;
+                    let config;
+                    // Remove bugLabel for V2Ray format
                     
-                    case 'shadowsocks': 
-                        const ssLabel = formatLabel(countryCode, isp, 'SS', tls);
-                        const ssAuth = `none:${uuid}`;
-                        config = `ss://${safeBase64Encode(ssAuth)}@${domain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(ssLabel)}`;
-                        break;
-                    
-                    case 'mix': 
-                        // For mix, we'll create all protocol types with appropriate labels
-                        const vmessConfigMix = createVMessConfig(uuid, domain, host, sni, proxyHost, proxyPort, countryCode, isp, tls);
-                        const vmessStringMix = JSON.stringify(vmessConfigMix);
+                    switch (type) {
+                        case 'vless': 
+                            const vlessLabel = formatLabel(countryCode, isp, 'VLESS', tls);
+                            config = `vless://${uuid}@${bugDomain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(vlessLabel)}`;
+                            break;
                         
-                        const vlessLabelMix = formatLabel(countryCode, isp, 'VLESS', tls);
-                        const trojanLabelMix = formatLabel(countryCode, isp, 'TROJAN', tls);
-                        const ssLabelMix = formatLabel(countryCode, isp, 'SS', tls);
+                        case 'vmess': 
+                            const vmessConfig = createVMessConfig(uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, countryCode, isp, tls);
+                            const vmessString = JSON.stringify(vmessConfig);
+                            config = `vmess://${safeBase64Encode(vmessString)}`;
+                            break;
                         
-                        const ssAuthMix = `none:${uuid}`;
+                        case 'trojan': 
+                            const trojanLabel = formatLabel(countryCode, isp, 'TROJAN', tls);
+                            config = `trojan://${uuid}@${bugDomain}:${tls ? 443 : 80}?security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(trojanLabel)}`;
+                            break;
                         
-                        config = [
-                            `vless://${uuid}@${domain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(vlessLabelMix)}`,
-                            `vmess://${safeBase64Encode(vmessStringMix)}`,
-                            `trojan://${uuid}@${domain}:${tls ? 443 : 80}?security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(trojanLabelMix)}`,
-                            `ss://${safeBase64Encode(ssAuthMix)}@${domain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${host}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${sni}#${encodeURIComponent(ssLabelMix)}`
-                        ].join('\n');
-                        break;
-                }
-                
-                if (config) {
-                    results.push(config);
+                        case 'shadowsocks': 
+                            const ssLabel = formatLabel(countryCode, isp, 'SS', tls);
+                            const ssAuth = `none:${uuid}`;
+                            config = `ss://${safeBase64Encode(ssAuth)}@${bugDomain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(ssLabel)}`;
+                            break;
+                        
+                        case 'mix': 
+                            // For mix, we'll create all protocol types with appropriate labels
+                            const vmessConfigMix = createVMessConfig(uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, countryCode, isp, tls);
+                            const vmessStringMix = JSON.stringify(vmessConfigMix);
+                            
+                            const vlessLabelMix = formatLabel(countryCode, isp, 'VLESS', tls);
+                            const trojanLabelMix = formatLabel(countryCode, isp, 'TROJAN', tls);
+                            const ssLabelMix = formatLabel(countryCode, isp, 'SS', tls);
+                            
+                            const ssAuthMix = `none:${uuid}`;
+
+                            config = [
+                                `vless://${uuid}@${bugDomain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(vlessLabelMix)}`,
+                                `vmess://${safeBase64Encode(vmessStringMix)}`,
+                                `trojan://${uuid}@${bugDomain}:${tls ? 443 : 80}?security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(trojanLabelMix)}`,
+                                `ss://${safeBase64Encode(ssAuthMix)}@${bugDomain}:${tls ? 443 : 80}?encryption=none&security=${tls ? 'tls' : 'none'}&type=ws&host=${bugHost}&path=%2F${PATH_PREFIX}%2F${proxyHost}-${proxyPort}&sni=${bugSni}#${encodeURIComponent(ssLabelMix)}`
+                            ].join('\n');
+                            break;
+                    }
+                    
+                    if (config) {
+                        results.push(config);
+                    }
                 }
             }
             
@@ -1327,6 +1394,7 @@ select.form-control {
             option.textContent = domain;
             mainDomainSelect.appendChild(option);
         });
+
     
         const form = document.getElementById('subLinkForm');
         const loadingEl = document.getElementById('loading');
@@ -1362,7 +1430,11 @@ select.form-control {
             const uuid = document.getElementById('uuid').value.trim();
             const bugType = document.getElementById('bugType').value;
             const mainDomain = document.getElementById('mainDomain').value;
-            const customBug = document.getElementById('customBug').value.trim();
+            
+            // Parse comma-separated custom bugs
+            const customBugInput = document.getElementById('customBug').value.trim();
+            const selectedBugs = customBugInput ? customBugInput.split(',').map(bug => bug.trim()) : [];
+            
             const tls = document.getElementById('tls').value === 'true';
             const country = document.getElementById('country').value.trim() || null;
             const limit = document.getElementById('limit').value.trim() || null;
@@ -1375,8 +1447,8 @@ select.form-control {
                 return;
             }
             
-            if ((bugType === 'non-wildcard' || bugType === 'wildcard') && !customBug) {
-                errorMessageEl.textContent = 'ERROR: Custom Bug is required for Non-Wildcard and Wildcard modes';
+            if ((bugType === 'non-wildcard' || bugType === 'wildcard') && selectedBugs.length === 0) {
+                errorMessageEl.textContent = 'ERROR: At least one Custom Bug is required for Non-Wildcard and Wildcard modes';
                 return;
             }
             
@@ -1397,7 +1469,7 @@ select.form-control {
                 
                 // Generate subscription
                 const result = await generateV2raySub(
-                    type, uuid, bugType, mainDomain, customBug, tls, validateProxies, formatType, country, limit
+                    type, uuid, bugType, mainDomain, selectedBugs, tls, validateProxies, formatType, country, limit
                 );
                 
                 // Hide loading
