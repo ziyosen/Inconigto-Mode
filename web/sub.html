@@ -882,22 +882,23 @@ select.form-control {
     
     // Create VMess config object
     function createVMessConfig(uuid, domain, host, sni, proxyHost, proxyPort, countryCode, isp, tls) {
-        return {
-            v: "2",
-            ps: `${countryCode} - ${isp} [ VMESS - ${tls ? 'TLS' : 'NTLS'} ]`,
-            add: domain,
-            port: tls ? 443 : 80,
-            id: uuid,
-            aid: "0",
-            net: "ws",
-            type: "zero",
-            host: host,
-            path: `/${PATH_PREFIX}/${proxyHost}-${proxyPort}`,
-            tls: tls ? "tls" : "none",
-            sni: sni,
-            fp: "randomized"
-        };
-    }
+    return {
+        v: "2",
+        ps: `${countryCode} - ${isp} [ VMESS - ${tls ? 'TLS' : 'NTLS'} ]`,
+        add: domain,
+        port: tls ? 443 : 80,
+        id: uuid,
+        aid: "0",
+        net: "ws",
+        type: "none",
+        scy: "zero",
+        host: host,
+        path: `/${PATH_PREFIX}/${proxyHost}-${proxyPort}`,
+        tls: tls ? "tls" : "none",
+        sni: sni,
+        fp: "randomized"
+    };
+}
     
     // Format label with protocol and TLS info
     function formatLabel(countryCode, isp, protocol, tls) {
