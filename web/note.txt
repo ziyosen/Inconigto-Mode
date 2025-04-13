@@ -1,4 +1,7 @@
 Wajib edit isi dari .html
 
-path 
+sub.html
+ https://github.com/InconigtoMode/inconigto-vpn/blob/master/web%2Fsub.html#L842-L842
+
+
 uuid
