@@ -8,7 +8,7 @@ workers_dev = true
 routes = [
   { pattern = "inconigto-mode.web.id", custom_domain = true },
   { pattern = "ava.game.naver.com.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "df.game.naver.com.inconigto-mode.web.id", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.inconigto-mode.web.id", custom_domain = true },
   { pattern = "graph.instagram.com.inconigto-mode.web.id", custom_domain = true },
   { pattern = "zaintest.vuclip.com.inconigto-mode.web.id", custom_domain = true },
   { pattern = "support.zoom.us.inconigto-mode.web.id", custom_domain = true },
@@ -16,7 +16,7 @@ routes = [
 
   { pattern = "inconigto.biz.id", custom_domain = true },
   { pattern = "ava.game.naver.com.inconigto.biz.id", custom_domain = true },
-  { pattern = "df.game.naver.com.inconigto.biz.id", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.inconigto.biz.id", custom_domain = true },
   { pattern = "graph.instagram.com.inconigto.biz.id", custom_domain = true },
   { pattern = "zaintest.vuclip.com.inconigto.biz.id", custom_domain = true },
   { pattern = "support.zoom.us.inconigto.biz.id", custom_domain = true },
@@ -24,7 +24,7 @@ routes = [
 
   { pattern = "inconigto.web.id", custom_domain = true },
   { pattern = "ava.game.naver.com.inconigto.web.id", custom_domain = true },
-  { pattern = "df.game.naver.com.inconigto.web.id", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.inconigto.web.id", custom_domain = true },
   { pattern = "graph.instagram.com.inconigto.web.id", custom_domain = true },
   { pattern = "zaintest.vuclip.com.inconigto.web.id", custom_domain = true },
   { pattern = "support.zoom.us.inconigto.web.id", custom_domain = true },
