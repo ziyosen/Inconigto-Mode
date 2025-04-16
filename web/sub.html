@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INCONIGTO - MODE</title>
+<title>INCONIGTO-MODE || Subscription </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -714,8 +715,9 @@ select.form-control {
             <div class="form-group">
                 <label for="formatType">FORMAT TYPE</label>
                 <select id="formatType" class="form-control" required>
-                    <option value="v2ray">V2RAY</option>
-                    <option value="clash">CLASH</option>
+                    <option value="v2ray">Link V2RAY</option>
+                    <option value="nekobox">Config NEKOBOX</option>
+                    <option value="clash">Proxy_Provider CLASH</option>
                 </select>
             </div>
             
@@ -728,9 +730,9 @@ select.form-control {
             <div class="form-group">
                 <label for="bugType">BUG TYPE</label>
                 <select id="bugType" class="form-control" required>
-                    <option value="default">DEFAULT</option>
-                    <option value="non-wildcard">NON-WILDCARD</option>
-                    <option value="wildcard">WILDCARD</option>
+                    <option value="default">DIRECT</option>
+                    <option value="non-wildcard">WEBSOCKET</option>
+                    <option value="wildcard">WILDCARD WEBSOCKET</option>
                 </select>
             </div>
             
@@ -765,14 +767,14 @@ select.form-control {
                 
                 <div class="form-group">
                     <label for="limit">QUANTITY</label>
-                    <input type="number" id="limit" class="form-control" min="1" max="20" value="5" placeholder="Max 20" required>
+                    <input type="number" id="limit" class="form-control" min="1" max="50" value="5" placeholder="Max 50" required>
                 </div>
             </div>
             
             <div class="form-group validation-group">
                 <label class="form-check">
                     <input type="checkbox" id="validateProxies" class="form-check-input" checked>
-                    <span class="form-check-label">Validate proxies before generating</span>
+                    <span class="form-check-label">Fiter ProxyIP ACTIVE Untuk Subscription ?</span>
                 </label>
             </div>
             
@@ -828,6 +830,15 @@ select.form-control {
     <div class="footer-logo">INCONIGTO-MODE</div>
     <div class="footer-powered">POWERED BY SECURE TECHNOLOGY</div>
     <div class="footer-social">
+        <a href="https://t.me/Noir7R" class="social-link" target="_blank">
+            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.846 1.467 1.618 2.796 2.503 4.532.545 1.062 1.587 2.739 3.19 2.756 1.26.033 2.052-.6 3.542-1.95a142.91 142.91 0 0 1 2.43-2.053c1.686-.142 3.382-.284 5.12-.436.887-.075 1.92-.262 2.405-1.226.436-.877-.015-1.35-.48-1.874l-3.881-4.369-5.481-6.174S22.185 2.128 21.198 2.433z"></path>
+                <path d="M18.167 7.068c.237 1.632-1.162 6.872-1.766 8.849"></path>
+            </svg>
+            @Noir7R
+        </a>
+    </div>    
+    <div class="footer-social">
         <a href="https://t.me/inconigto_Mode" class="social-link" target="_blank">
             <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.846 1.467 1.618 2.796 2.503 4.532.545 1.062 1.587 2.739 3.19 2.756 1.26.033 2.052-.6 3.542-1.95a142.91 142.91 0 0 1 2.43-2.053c1.686-.142 3.382-.284 5.12-.436.887-.075 1.92-.262 2.405-1.226.436-.877-.015-1.35-.48-1.874l-3.881-4.369-5.481-6.174S22.185 2.128 21.198 2.433z"></path>
@@ -854,7 +865,7 @@ select.form-control {
     const MainDomains = [
         'inconigto-mode.web.id',
         'inconigto.web.id',
-        'inconigto.biz.id'
+        'inconigto.biz.id',
     ];
 
     const CustomBugs = [];
@@ -959,8 +970,8 @@ select.form-control {
             
             // Keep the default options
             const defaultOptions = `
-                <option value="">GLOBAL (ALL)</option>
                 <option value="random">RANDOM</option>
+                <option value="">GLOBAL (ALL)</option>
             `;
             
             // Add the country codes from GitHub with their names
@@ -978,8 +989,8 @@ select.form-control {
         }
     }
     
-    // Generate Clash YAML for VLESS
-    function generateClashVLESS(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
+// Generate Clash YAML for VLESS
+function generateClashVLESS(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
     return `- name: ${name}
   server: ${domain}
   port: ${tls ? 443 : 80}
@@ -997,8 +1008,8 @@ select.form-control {
       Host: ${host}`;
 }
 
-    // Generate Clash YAML for Trojan
-    function generateClashTrojan(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
+// Generate Clash YAML for Trojan
+function generateClashTrojan(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
     return `- name: ${name}
   server: ${domain}
   port: ${tls ? 443 : 80}
@@ -1014,8 +1025,8 @@ select.form-control {
       Host: ${host}`;
 }
 
-    // Generate Clash YAML for Shadowsocks
-    function generateClashSS(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
+// Generate Clash YAML for Shadowsocks
+function generateClashSS(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
     return `- name: ${name}
   server: ${domain}
   port: ${tls ? 443 : 80}
@@ -1039,8 +1050,8 @@ select.form-control {
     v2ray-http-upgrade-fast-open: false`;
 }
 
-    // Generate Clash YAML for VMess
-    function generateClashVMess(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
+// Generate Clash YAML for VMess
+function generateClashVMess(name, uuid, domain, host, sni, proxyHost, proxyPort, tls) {
     return `- name: ${name}
   server: ${domain}
   port: ${tls ? 443 : 80}
@@ -1058,9 +1069,99 @@ select.form-control {
       Host: ${host}
   udp: true`;
 }
+
+
+// Generate Nekobox configuration
+function generateNekoboxConfig(name, uuid, domain, host, sni, proxyHost, proxyPort, tls, type) {
+    const ports = tls ? '443' : '80';
+    const snio = tls ? `\n      "tls": {\n        "enabled": true,\n        "insecure": false,\n        "server_name": "${sni}",\n        "utls": {\n          "enabled": true,\n          "fingerprint": "randomized"\n        }\n      },` : '';
+
+    let config = '';
+    if (type === 'vless') {
+        config = `{
+      "domain_strategy": "ipv4_only",
+      "flow": "",
+      "multiplex": {
+        "enabled": false,
+        "max_streams": 32,
+        "protocol": "smux"
+      },
+      "packet_encoding": "xudp",
+      "server": "${domain}",
+      "server_port": ${ports},
+      "tag": "${name}",${snio}
+      "transport": {
+        "early_data_header_name": "Sec-WebSocket-Protocol",
+        "headers": {
+          "Host": "${host}"
+        },
+        "max_early_data": 0,
+        "path": "/${PATH_PREFIX}/${proxyHost}-${proxyPort}",
+        "type": "ws"
+      },
+      "type": "vless",
+      "uuid": "${uuid}"
+    }`;
+    } else if (type === 'trojan') {
+        config = `{
+      "domain_strategy": "ipv4_only",
+      "multiplex": {
+        "enabled": false,
+        "max_streams": 32,
+        "protocol": "smux"
+      },
+      "password": "${uuid}",
+      "server": "${domain}",
+      "server_port": ${ports},
+      "tag": "${name}",${snio}
+      "transport": {
+        "early_data_header_name": "Sec-WebSocket-Protocol",
+        "headers": {
+          "Host": "${host}"
+        },
+        "max_early_data": 0,
+        "path": "/${PATH_PREFIX}/${proxyHost}-${proxyPort}",
+        "type": "ws"
+      },
+      "type": "trojan"
+    }`;
+    } else if (type === 'ss') {
+        config = `{
+      "type": "shadowsocks",
+      "tag": "${name}",
+      "server": "${domain}",
+      "server_port": 443,
+      "method": "none",
+      "password": "${uuid}",
+      "plugin": "v2ray-plugin",
+      "plugin_opts": "mux=0;path=/${PATH_PREFIX}/${proxyHost}-${proxyPort};host=${host};tls=${tls ? '1' : '0'}"
+    }`;
+    } else if (type === 'vmess') {
+        config = `{
+  "alter_id": 0,
+  "packet_encoding": "",
+  "security": "zero",
+  "server": "${domain}",
+  "server_port": 443,${snio}
+  "transport": {
+    "headers": {
+      "Host": "${host}"
+    },
+    "path": "/${PATH_PREFIX}/${proxyHost}-${proxyPort}",
+    "type": "ws"
+  },
+  "uuid": "${uuid}",
+  "type": "vmess",
+  "domain_strategy": "prefer_ipv4",
+  "tag": "${name}"
+}`;
+    }
     
-    // Main Function
-    async function generateV2raySub(type, uuid, bugType, mainDomain, customBugs, tls, validateProxies, formatType, country = null, limit = null) {
+    return config;
+}
+
+// Main Function
+async function generateV2raySub(type, uuid, bugType, mainDomain, customBugs, tls, validateProxies, formatType, country = null, limit = null) {
     try {
         const response = await fetch(DEFAULT_PROXY_BANK_URL);
         if (!response.ok) {
@@ -1137,7 +1238,7 @@ select.form-control {
             invalidCountEl.textContent = '0';
             
             // Prepare validation tasks in batches to avoid overwhelming the browser
-            const BATCH_SIZE = 10; // Process 10 proxies at a time
+            const BATCH_SIZE = 5; // Process 10 proxies at a time
             let validCount = 0;
             let invalidCount = 0;
             let processedCount = 0;
@@ -1295,8 +1396,258 @@ select.form-control {
             
             // Return a single Clash configuration with all proxies
             return `#Inconigto-Mode\nproxies:\n${allProxies.join('\n')}`;
-        } else {
-            // V2Ray format - process each proxy individually
+        } 
+        
+        // For Nekobox format
+        else if (formatType === 'nekobox') {
+            let allProxies = [];
+            let proxyTags = [];
+            
+            for (let i = 0; i < limitedProxies.length; i++) {
+                const line = limitedProxies[i];
+                const parts = line.split(',');
+                if (parts.length < 3) continue;
+                
+                const [proxyHost, proxyPort, countryCode, ...ispParts] = parts;
+                const isp = ispParts.join(' ') || 'Unknown';
+                const sanitizedIsp = isp.replace(/[\n\r]+/g, "").trim();
+                
+                // If we have multiple bugs, create configs for each bug
+                const bugsToUse = customBugs && customBugs.length > 0 ? customBugs : [mainDomain];
+                
+                for (const bug of bugsToUse) {
+                    // Determine domain, host, and SNI for this specific bug
+                    let bugDomain, bugHost, bugSni;
+                    
+                    switch (bugType) {
+                        case 'default':
+                            bugDomain = mainDomain;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'non-wildcard':
+                            bugDomain = bug;
+                            bugHost = mainDomain;
+                            bugSni = mainDomain;
+                            break;
+                        case 'wildcard':
+                            bugDomain = bug;
+                            bugHost = `${bug}.${mainDomain}`;
+                            bugSni = `${bug}.${mainDomain}`;
+                            break;
+                    }
+                    
+                    const bugLabel = bug !== mainDomain ? `[${bug}]` : '';
+                    const name = `(${countryCode}) ${sanitizedIsp} ${bugLabel} ${i+1}`;
+                    
+                    switch (type) {
+    case 'vless':
+        proxyTags.push(`        "${name}",`);
+        allProxies.push(generateNekoboxConfig(name, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vless'));
+        break;
+    case 'trojan':
+        proxyTags.push(`        "${name}",`);
+        allProxies.push(generateNekoboxConfig(name, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'trojan'));
+        break;
+    case 'shadowsocks':
+        proxyTags.push(`        "${name}",`);
+        allProxies.push(generateNekoboxConfig(name, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'ss'));
+        break;
+    case 'vmess':
+        proxyTags.push(`        "${name}",`);
+        allProxies.push(generateNekoboxConfig(name, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vmess'));
+        break;
+    case 'mix':
+        proxyTags.push(`        "${name} vless",`);
+        proxyTags.push(`        "${name} trojan",`);
+        proxyTags.push(`        "${name} ss",`);
+        proxyTags.push(`        "${name} vmess",`);  // Added vmess
+        allProxies.push(generateNekoboxConfig(`${name} vless`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vless'));
+        allProxies.push(generateNekoboxConfig(`${name} trojan`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'trojan'));
+        allProxies.push(generateNekoboxConfig(`${name} ss`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'ss'));
+        allProxies.push(generateNekoboxConfig(`${name} vmess`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vmess'));  // Added vmess config
+        break;
+}
+                }
+            }
+            
+            // Remove trailing comma from the last proxy
+            if (allProxies.length > 0) {
+                const lastProxy = allProxies[allProxies.length - 1];
+                allProxies[allProxies.length - 1] = lastProxy.replace(/,\s*$/, '');
+            }
+            
+            // Create the full Nekobox configuration
+            return `
+
+{
+  "dns": {
+    "final": "dns-final",
+    "independent_cache": true,
+    "rules": [
+      {
+        "disable_cache": false,
+        "domain": [
+          "family.cloudflare-dns.com",
+          "${mainDomain}"
+        ],
+        "server": "direct-dns"
+      }
+    ],
+    "servers": [
+      {
+        "address": "https://family.cloudflare-dns.com/dns-query",
+        "address_resolver": "direct-dns",
+        "strategy": "ipv4_only",
+        "tag": "remote-dns"
+      },
+      {
+        "address": "local",
+        "strategy": "ipv4_only",
+        "tag": "direct-dns"
+      },
+      {
+        "address": "local",
+        "address_resolver": "dns-local",
+        "strategy": "ipv4_only",
+        "tag": "dns-final"
+      },
+      {
+        "address": "local",
+        "tag": "dns-local"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "dns-block"
+      }
+    ]
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "../cache/clash.db",
+      "store_fakeip": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "../files/yacd"
+    }
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "listen_port": 6450,
+      "override_address": "8.8.8.8",
+      "override_port": 53,
+      "tag": "dns-in",
+      "type": "direct"
+    },
+    {
+      "domain_strategy": "",
+      "endpoint_independent_nat": true,
+      "inet4_address": [
+        "172.19.0.1/28"
+      ],
+      "mtu": 9000,
+      "sniff": true,
+      "sniff_override_destination": true,
+      "stack": "system",
+      "tag": "tun-in",
+      "type": "tun"
+    },
+    {
+      "domain_strategy": "",
+      "listen": "0.0.0.0",
+      "listen_port": 2080,
+      "sniff": true,
+      "sniff_override_destination": true,
+      "tag": "mixed-in",
+      "type": "mixed"
+    }
+  ],
+  "log": {
+    "level": "info"
+  },
+  "outbounds": [
+    {
+      "outbounds": [
+        "Best Latency",
+${proxyTags.join('\n')}
+        "direct"
+      ],
+      "tag": "Internet",
+      "type": "selector"
+    },
+    {
+      "interval": "1m0s",
+      "outbounds": [
+${proxyTags.join('\n')}
+        "direct"
+      ],
+      "tag": "Best Latency",
+      "type": "urltest",
+      "url": "https://detectportal.firefox.com/success.txt"
+    },
+${allProxies.join(',\n')},
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "bypass",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "rules": [
+      {
+        "outbound": "dns-out",
+        "port": [
+          53
+        ]
+      },
+      {
+        "inbound": [
+          "dns-in"
+        ],
+        "outbound": "dns-out"
+      },
+      {
+        "network": [
+          "udp"
+        ],
+        "outbound": "block",
+        "port": [
+          443
+        ],
+        "port_range": []
+      },
+      {
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "outbound": "block",
+        "source_ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ]
+      }
+    ]
+  }
+}`;
+        }
+        // V2Ray format - process each proxy individually
+        else {
             for (const line of limitedProxies) {
                 const parts = line.split(',');
                 if (parts.length < 3) continue;
@@ -1510,5 +1861,7 @@ select.form-control {
         });
     });
 </script>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"931600ff9fd3fcf0","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.3.0","token":"699b92b44d49410cb972cc556d389863"}' crossorigin="anonymous"></script>
 </body>
 </html>
