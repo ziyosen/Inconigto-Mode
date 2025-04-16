@@ -1,14 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inconigto Mode - V2ray Account Generator</title>
-    <meta name="description" content="Create V2ray accounts with VMESS, VLESS, TROJAN, and SHADOWSOCKS protocols using Cloudflare Workers">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Inconigto Mode - Generator Akun V2ray</title>
+    <meta name="description" content="Buat akun V2ray dengan protokol VMESS, VLESS, TROJAN, dan SHADOWSOCKS menggunakan Cloudflare Workers">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/AFRcloud/BG/main/icons8-film-noir-80.png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/AFRcloud/BG/main/icons8-film-noir-80.png">
+
+<!-- Primary Meta Tags -->
+    <meta name="title" content="Inconigto Mode - Generator Akun V2ray">
+    <meta name="description" content="Buat akun V2ray dengan protokol VMESS, VLESS, TROJAN, dan SHADOWSOCKS menggunakan Cloudflare Workers">
+    <meta name="keywords" content="V2ray, VMESS, VLESS, TROJAN, SHADOWSOCKS, Cloudflare Workers, VPN, Proxy">
+    <meta name="author" content="Inconigto Mode">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Indonesian">
+    <meta name="revisit-after" content="7 days">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inconigto-mode.web.id/">
+    <meta property="og:title" content="Inconigto Mode - Generator Akun V2ray">
+    <meta property="og:description" content="Buat akun V2ray dengan protokol VMESS, VLESS, TROJAN, dan SHADOWSOCKS menggunakan Cloudflare Workers">
+    <meta property="og:image" content="https://raw.githubusercontent.com/akulelaki696/bg/refs/heads/main/20250106_010158.jpg">
+    <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/akulelaki696/bg/refs/heads/main/20250106_010158.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="id_ID">
+
+<!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://inconigto-mode.web.id/">
+    <meta property="twitter:title" content="Inconigto Mode - Generator Akun V2ray">
+    <meta property="twitter:description" content="Buat akun V2ray dengan protokol VMESS, VLESS, TROJAN, dan SHADOWSOCKS menggunakan Cloudflare Workers">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/akulelaki696/bg/refs/heads/main/20250106_010158.jpg">
+
+<!-- Canonical URL -->
+    <link rel="canonical" href="https://inconigto-mode.web.id/">
+
+<!-- Preconnect to External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+
+<!-- Security -->
+<!-- Remove or comment out the CSP that's causing issues -->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com cdnjs.cloudflare.com; font-src fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' raw.githubusercontent.com; connect-src 'self';"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+<!-- Mobile App Capability -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f0c29">
     
     <style>
         :root {
@@ -603,6 +654,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
+            margin-bottom: 30px;
         }
         
         .telegram-link {
@@ -627,6 +679,12 @@
         .telegram-link i {
             font-size: 1.5rem;
             color: #0088cc;
+        }
+        
+        .telegram-section h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: var(--text-primary);
         }
         
         footer {
@@ -734,6 +792,162 @@
             }
         }
         
+        /* Floating Donation Button */
+        .donate-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(106, 17, 203, 0.5);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse-donate 2s infinite;
+        }
+
+        @keyframes pulse-donate {
+            0% {
+                box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(106, 17, 203, 0);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(106, 17, 203, 0);
+                transform: scale(1);
+            }
+        }
+
+        .donate-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* QRIS Popup */
+        .qris-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .qris-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Animasi untuk border */
+        @keyframes spin-slow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes border-animate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes pulse-animation {
+            0% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        .qris-container {
+            position: relative;
+            background: rgba(15, 14, 32, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 0 30px rgba(106, 17, 203, 0.5);
+        }
+
+        .qris-popup.active .qris-container {
+            transform: scale(1);
+        }
+
+        .qris-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .qris-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .close-popup:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
         /* Responsive styles */
         @media (max-width: 768px) {
             header {
@@ -753,7 +967,7 @@
             }
             
             .mobile-menu-btn {
-                display: block;
+                display: block block;
                 position: absolute;
                 top: 20px;
                 right: 20px;
@@ -793,8 +1007,16 @@
                 max-width: 300px;
                 justify-content: center;
             }
+            
+            .donate-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
         }
-        
+
         @media (max-width: 480px) {
             .profile-name {
                 font-size: 2rem;
@@ -825,8 +1047,97 @@
             .telegram-title {
                 font-size: 1.5rem;
             }
+            
+            .qris-title {
+                font-size: 1.5rem;
+            }
         }
-    </style>
+
+        .qris-img-container {
+            position: relative;
+            max-width: 250px; /* Ukuran lebih kecil */
+            margin: 0 auto; /* Untuk tetap di tengah */
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .qris-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+/* Tailwind-like utility classes */
+.fixed { position: fixed; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-\[1001\] { z-index: 1001; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.p-4 { padding: 1rem; }
+.opacity-0 { opacity: 0; }
+.opacity-100 { opacity: 1; }
+.pointer-events-none { pointer-events: none; }
+.transition-opacity { transition-property: opacity; }
+.duration-300 { transition-duration: 300ms; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.bg-black { background-color: #000; }
+.bg-opacity-70 { background-color: rgba(0, 0, 0, 0.7); }
+.backdrop-blur-sm { backdrop-filter: blur(4px); }
+.bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+.from-slate-900 { --tw-gradient-from: #0f172a; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(15, 23, 42, 0)); }
+.to-slate-800 { --tw-gradient-to: #1e293b; }
+.rounded-2xl { border-radius: 1rem; }
+.p-1 { padding: 0.25rem; }
+.max-w-md { max-width: 28rem; }
+.w-full { width: 100%; }
+.transform { transform: translateX(0) translateY(0) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1); }
+.scale-95 { transform: scale(0.95); }
+.scale-100 { transform: scale(1); }
+.transition-all { transition-property: all; }
+.overflow-hidden { overflow: hidden; }
+.bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+.from-indigo-500 { --tw-gradient-from: #6366f1; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(99, 102, 241, 0)); }
+.via-purple-500 { --tw-gradient-via: #a855f7; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to, rgba(168, 85, 247, 0)); }
+.to-pink-500 { --tw-gradient-to: #ec4899; }
+.animate-spin-slow { animation: spin-slow 3s linear infinite; }
+.opacity-70 { opacity: 0.7; }
+.bg-slate-900 { background-color: #0f172a; }
+.rounded-xl { border-radius: 0.75rem; }
+.p-6 { padding: 1.5rem; }
+.flex-col { flex-direction: column; }
+.top-2 { top: 0.5rem; }
+.right-2 { right: 0.5rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.rounded-full { border-radius: 9999px; }
+.bg-slate-800 { background-color: #1e293b; }
+.hover\:bg-slate-700:hover { background-color: #334155; }
+.text-gray-400 { color: #9ca3af; }
+.hover\:text-white:hover { color: #ffffff; }
+.transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.font-bold { font-weight: 700; }
+.mb-2 { margin-bottom: 0.5rem; }
+.text-center { text-align: center; }
+.bg-clip-text { -webkit-background-clip: text; background-clip: text; }
+.text-transparent { color: transparent; }
+.from-indigo-400 { --tw-gradient-from: #818cf8; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(129, 140, 248, 0)); }
+.to-purple-400 { --tw-gradient-to: #c084fc; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.mb-4 { margin-bottom: 1rem; }
+.p-3 { padding: 0.75rem; }
+.bg-white { background-color: #ffffff; }
+.p-2 { padding: 0.5rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.h-auto { height: auto; }
+.max-w-xs { max-width: 20rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+</style>
 </head>
 <body>
     <div class="particles-container" id="particles"></div>
@@ -846,10 +1157,10 @@
             
             <nav id="main-nav">
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#protocols">Protocols</a></li>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#protocols">Protokol</a></li>
                     <li><a href="#telegram">Telegram</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#contact">Kontak</a></li>
                 </ul>
             </nav>
         </header>
@@ -860,15 +1171,15 @@
                     <img src="https://raw.githubusercontent.com/akulelaki696/bg/refs/heads/main/20250106_010158.jpg" alt="Inconigto Mode Profile" class="profile-img">
                 </div>
                 <h1 class="profile-name" data-text="Inconigto Mode">Inconigto Mode</h1>
-                <p class="service-description">V2ray Account Generator based on Cloudflare Workers</p>
+                <p class="service-description">Generator Akun V2ray berbasis Cloudflare Workers</p>
                 <div class="status-badge">
-                    <i class="fas fa-circle"></i> Service Online
+                    <i class="fas fa-circle"></i> Layanan Aktif
                 </div>
             </div>
             
             <div class="buttons">
-                <a href="#create-account" class="btn btn-primary">Create V2ray Account</a>
-                <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+                <a href="#create-account" class="btn btn-primary">Buat Akun V2ray</a>
+                <a href="#learn-more" class="btn btn-secondary">Pelajari Lebih Lanjut</a>
             </div>
         </section>
         
@@ -907,52 +1218,77 @@
                     <i class="fas fa-cloud"></i>
                 </div>
                 <h3 class="feature-title">Cloudflare Workers</h3>
-                <p class="feature-description">Powered by Cloudflare's global network, ensuring high availability and low latency connections from anywhere in the world.</p>
+                <p class="feature-description">Didukung oleh jaringan global Cloudflare, memastikan ketersediaan tinggi dan koneksi latensi rendah dari mana saja di dunia.</p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h3 class="feature-title">Multiple Protocols</h3>
-                <p class="feature-description">Support for various protocols including VMESS, VLESS, TROJAN, and SHADOWSOCKS, giving you flexibility and options for your connection needs.</p>
+                <h3 class="feature-title">Multi Protokol</h3>
+                <p class="feature-description">Mendukung berbagai protokol termasuk VMESS, VLESS, TROJAN, dan SHADOWSOCKS, memberikan fleksibilitas dan pilihan untuk kebutuhan koneksi Anda.</p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
-                <h3 class="feature-title">High Performance</h3>
-                <p class="feature-description">Optimized for speed and reliability, our service ensures a smooth and stable connection experience with minimal latency.</p>
+                <h3 class="feature-title">Performa Tinggi</h3>
+                <p class="feature-description">Dioptimalkan untuk kecepatan dan keandalan, layanan kami memastikan pengalaman koneksi yang lancar dan stabil dengan latensi minimal.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-asterisk"></i>
+                </div>
+                <h3 class="feature-title">Dukungan Wildcard</h3>
+                <p class="feature-description">Mendukung konfigurasi wildcard untuk domain dan subdomain, memungkinkan Anda menggunakan satu konfigurasi untuk beberapa subdomain tanpa perlu setup tambahan.</p>
             </div>
         </section>
         
         <section id="create-account" class="cta-section">
-            <h2 class="cta-title">Create Your V2ray Account</h2>
-            <p class="cta-description">Generate your own V2ray account with your preferred protocol in just a few clicks. No registration required, instant setup.</p>
+            <h2 class="cta-title">Buat Akun V2ray Anda</h2>
+            <p class="cta-description">Buat akun V2ray Anda sendiri dengan protokol pilihan Anda hanya dalam beberapa klik. Tidak perlu registrasi, setup instan.</p>
             
             <div class="buttons">
-                <a href="https://inconigto-mode.web.id/link" class="btn btn-primary">Create V2ray Account</a>
-                <a href="https://inconigto-mode.web.id/sub" class="btn btn-primary">Create V2ray Subscription</a>
+                <a href="https://inconigto-mode.web.id/link" class="btn btn-primary">Buat Akun V2ray</a>
+                <a href="https://inconigto-mode.web.id/sub" class="btn btn-primary">Buat Langganan V2ray</a>
             </div>
         </section>
         
         <section id="telegram" class="telegram-section">
-            <h2 class="telegram-title">Join Our Telegram Community</h2>
-            <p class="telegram-description">Stay updated with the latest features, get support, and connect with other users through our Telegram channels.</p>
+            <h2 class="telegram-title">Bergabung dengan Komunitas Telegram Kami</h2>
+            <p class="telegram-description">Dapatkan update fitur terbaru, dukungan, dan terhubung dengan pengguna lain melalui channel Telegram kami.</p>
             
+            <h3>Tim Kami</h3>
             <div class="telegram-links">
                 <a href="https://t.me/noir7R" target="_blank" class="telegram-link">
                     <i class="fab fa-telegram"></i>
-                    <span>@noir7R</span>
+                    <span>@noir7R (Owner)</span>
                 </a>
                 <a href="https://t.me/InconigtoMode" target="_blank" class="telegram-link">
                     <i class="fab fa-telegram"></i>
-                    <span>@InconigtoMode</span>
+                    <span>@InconigtoMode (Dev)</span>
                 </a>
                 <a href="https://t.me/Inconigto_Mode" target="_blank" class="telegram-link">
                     <i class="fab fa-telegram"></i>
-                    <span>@Inconigto_Mode</span>
+                    <span>@Inconigto_Mode (Dev)</span>
+                </a>
+            </div>
+            
+            <h3>Channel & Bot</h3>
+            <div class="telegram-links">
+                <a href="https://t.me/InconigtoMode0" target="_blank" class="telegram-link">
+                    <i class="fab fa-telegram"></i>
+                    <span>@InconigtoMode0 (Channel)</span>
+                </a>
+                <a href="https://t.me/InconigtoMode_bot" target="_blank" class="telegram-link">
+                    <i class="fab fa-telegram"></i>
+                    <span>@InconigtoMode_bot (Bot Convert)</span>
+                </a>
+                <a href="https://t.me/subConverter_bot" target="_blank" class="telegram-link">
+                    <i class="fab fa-telegram"></i>
+                    <span>@subConverter_bot (Bot Convert)</span>
                 </a>
             </div>
         </section>
@@ -961,11 +1297,11 @@
             <div class="footer-logo">Inconigto Mode</div>
             
             <div class="footer-links">
-                <a href="#" class="footer-link">Home</a>
-                <a href="#features" class="footer-link">Features</a>
-                <a href="#protocols" class="footer-link">Protocols</a>
+                <a href="#" class="footer-link">Beranda</a>
+                <a href="#features" class="footer-link">Fitur</a>
+                <a href="#protocols" class="footer-link">Protokol</a>
                 <a href="#telegram" class="footer-link">Telegram</a>
-                <a href="#contact" class="footer-link">Contact</a>
+                <a href="#contact" class="footer-link">Kontak</a>
             </div>
             
             <div class="footer-social">
@@ -975,13 +1311,46 @@
                 <a href="#" class="social-icon">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-github"></i>
-                </a>
             </div>
             
-            <p class="copyright">&copy; <script>document.write(new Date().getFullYear())</script> Inconigto Mode. All rights reserved.</p>
+            <p class="copyright">&copy; <script>document.write(new Date().getFullYear())</script> Inconigto Mode. Hak Cipta Dilindungi.</p>
         </footer>
+    
+    <!-- Floating Donation Button -->
+    <div class="donate-btn" id="donate-btn">
+        <i class="fas fa-donate"></i>
+    </div>
+    
+    <!-- QRIS Popup -->
+    <div id="qris-popup" class="fixed inset-0 z-[1001] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-sm" id="donation-backdrop"></div>
+        <div class="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-1 max-w-md w-full transform scale-95 transition-all duration-300" id="donation-content">
+            <!-- Animated border -->
+            <div class="absolute inset-0 rounded-2xl overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-spin-slow opacity-70"></div>
+            </div>
+            
+            <div class="relative bg-slate-900 rounded-xl p-6 flex flex-col items-center">
+                <button id="close-popup" class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <h3 class="text-xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Support Inconigto-Mode</h3>
+                <p class="text-gray-400 text-sm mb-4 text-center">Your donation helps keep our services running</p>
+                
+                <div class="qris-container p-3 bg-white rounded-xl mb-4 relative overflow-hidden">
+                    <!-- Inner animated border -->
+                    <div class="absolute inset-0 p-2">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-pulse rounded-lg opacity-70"></div>
+                    </div>
+                    <div class="relative bg-white p-2 rounded-lg">
+                        <img src="https://raw.githubusercontent.com/InconigtoMode/inconigto-vpn/refs/heads/master/web/qris.png" alt="Donation QR Code" class="w-full h-auto max-w-xs mx-auto">
+                    </div>
+                </div>
+                
+                <p class="text-gray-400 text-xs text-center">Scan this QR code with your payment app to donate</p>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -1063,6 +1432,44 @@
         
         // Add data-text attribute for text shadow effect
         document.querySelector('.profile-name').setAttribute('data-text', 'Inconigto Mode');
+        
+        // Donation button and popup
+        const donateBtn = document.getElementById('donate-btn');
+        const qrisPopup = document.getElementById('qris-popup');
+        const closePopup = document.getElementById('close-popup');
+        const donationBackdrop = document.getElementById('donation-backdrop');
+
+        donateBtn.addEventListener('click', () => {
+            qrisPopup.classList.remove('opacity-0', 'pointer-events-none');
+            qrisPopup.classList.add('opacity-100');
+            document.getElementById('donation-content').classList.remove('scale-95');
+            document.getElementById('donation-content').classList.add('scale-100');
+        });
+
+        closePopup.addEventListener('click', () => {
+            qrisPopup.classList.remove('opacity-100');
+            qrisPopup.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('donation-content').classList.remove('scale-100');
+            document.getElementById('donation-content').classList.add('scale-95');
+        });
+
+        // Close popup when clicking outside
+        donationBackdrop.addEventListener('click', () => {
+            qrisPopup.classList.remove('opacity-100');
+            qrisPopup.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('donation-content').classList.remove('scale-100');
+            document.getElementById('donation-content').classList.add('scale-95');
+        });
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !qrisPopup.classList.contains('opacity-0')) {
+                qrisPopup.classList.remove('opacity-100');
+                qrisPopup.classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('donation-content').classList.remove('scale-100');
+                document.getElementById('donation-content').classList.add('scale-95');
+            }
+        });
     </script>
 </body>
 </html>
