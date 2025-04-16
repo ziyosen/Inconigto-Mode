@@ -1458,14 +1458,15 @@ async function generateV2raySub(type, uuid, bugType, mainDomain, customBugs, tls
         allProxies.push(generateNekoboxConfig(name, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vmess'));
         break;
     case 'mix':
-        proxyTags.push(`        "${name} vless",`);
-        proxyTags.push(`        "${name} trojan",`);
-        proxyTags.push(`        "${name} ss",`);
-        proxyTags.push(`        "${name} vmess",`);  // Added vmess
-        allProxies.push(generateNekoboxConfig(`${name} vless`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vless'));
-        allProxies.push(generateNekoboxConfig(`${name} trojan`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'trojan'));
-        allProxies.push(generateNekoboxConfig(`${name} ss`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'ss'));
-        allProxies.push(generateNekoboxConfig(`${name} vmess`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vmess'));  // Added vmess config
+        proxyTags.push(`        "${name} -[VLESS-${tls ? 'TLS' : 'NTLS'}]",`);
+        proxyTags.push(`        "${name} -[TROJAN-${tls ? 'TLS' : 'NTLS'}]",`);
+        proxyTags.push(`        "${name} -[SS-${tls ? 'TLS' : 'NTLS'}]",`);
+        proxyTags.push(`        "${name} -[VMESS-${tls ? 'TLS' : 'NTLS'}]",`);
+
+        allProxies.push(generateNekoboxConfig(`${name} -[VLESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vless'));
+        allProxies.push(generateNekoboxConfig(`${name} -[TROJAN-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'trojan'));
+        allProxies.push(generateNekoboxConfig(`${name} -[SS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'ss'));
+        allProxies.push(generateNekoboxConfig(`${name} -[VMESS-${tls ? 'TLS' : 'NTLS'}]`, uuid, bugDomain, bugHost, bugSni, proxyHost, proxyPort, tls, 'vmess'));  // Added vmess config
         break;
 }
                 }
