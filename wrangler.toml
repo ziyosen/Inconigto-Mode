@@ -1,4 +1,4 @@
-name = "siren"
+name = "inconigto"
 main = "build/worker/shim.mjs"
 compatibility_date = "2024-05-23"
 minify = true
@@ -6,7 +6,7 @@ workers_dev = true
 
 [[kv_namespaces]]
 binding = "SIREN"
-id = "f7a1c12a83d349bb8e8868e7d524ac4c"
+id = ""
 [build]
 command = "cargo install -q worker-build && worker-build --release"
 
