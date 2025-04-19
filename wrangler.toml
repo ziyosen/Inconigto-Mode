@@ -6,14 +6,6 @@ workers_dev = true
 
 
 routes = [
-  { pattern = "inconigto-mode.web.id", custom_domain = true },
-  { pattern = "ava.game.naver.com.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "quiz.int.vidio.com.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "graph.instagram.com.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "zaintest.vuclip.com.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "support.zoom.us.inconigto-mode.web.id", custom_domain = true },
-  { pattern = "cache.netflix.com.inconigto-mode.web.id", custom_domain = true },
-
   { pattern = "inconigto.biz.id", custom_domain = true },
   { pattern = "ava.game.naver.com.inconigto.biz.id", custom_domain = true },
   { pattern = "quiz.int.vidio.com.inconigto.biz.id", custom_domain = true },
