@@ -67,5 +67,5 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: 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
+        github_token: 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  # Gunakan PAT alih-alih GITHUB_TOKEN
         branch: ${{ github.ref }}
