@@ -34,7 +34,7 @@ jobs:
         # Membuat file sementara dengan konten hingga akhir routes
         head -n $((routes_end - 1)) wrangler.toml > wrangler.toml.new
         
-        # Menambahkan routes baru dengan nilai domain baru
+        # Menambahkan routes baru dengan nilai domain baru dengan format yang diinginkan
         echo "" >> wrangler.toml.new
         echo "  { pattern = \"${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
         echo "  { pattern = \"ava.game.naver.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
@@ -44,7 +44,7 @@ jobs:
         echo "  { pattern = \"support.zoom.us.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
         echo "  { pattern = \"cache.netflix.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
         
-        # Menambahkan kurung tutup untuk routes
+        # Menambahkan kurung tutup untuk routes dengan format yang diinginkan
         echo "]" >> wrangler.toml.new
         
         # Menambahkan sisa konten file setelah section routes
@@ -67,5 +67,5 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: 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  # Gunakan PAT alih-alih GITHUB_TOKEN
+        github_token: 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
         branch: ${{ github.ref }}
