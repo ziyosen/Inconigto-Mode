@@ -27,14 +27,12 @@ jobs:
           exit 1
         fi
         
-        # Membaca file wrangler.toml
-        content=$(cat wrangler.toml)
+        # Mencari baris awal dan akhir dari section routes
+        routes_start=$(grep -n "routes = \[" wrangler.toml | cut -d: -f1)
+        routes_end=$(grep -n "^\]$" wrangler.toml | awk -v start="$routes_start" '$1 > start {print $1; exit}')
         
-        # Mencari posisi kurung tutup terakhir
-        last_bracket_line=$(grep -n "]" wrangler.toml | tail -1 | cut -d: -f1)
-        
-        # Membuat file sementara dengan konten hingga baris sebelum kurung tutup
-        head -n $((last_bracket_line - 1)) wrangler.toml > wrangler.toml.new
+        # Membuat file sementara dengan konten hingga akhir routes
+        head -n $((routes_end - 1)) wrangler.toml > wrangler.toml.new
         
         # Menambahkan routes baru dengan nilai domain baru
         echo "" >> wrangler.toml.new
@@ -46,8 +44,11 @@ jobs:
         echo "  { pattern = \"support.zoom.us.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
         echo "  { pattern = \"cache.netflix.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
         
-        # Menambahkan kurung tutup
+        # Menambahkan kurung tutup untuk routes
         echo "]" >> wrangler.toml.new
+        
+        # Menambahkan sisa konten file setelah section routes
+        tail -n +$((routes_end + 1)) wrangler.toml >> wrangler.toml.new
         
         # Mengganti file asli dengan file baru
         mv wrangler.toml.new wrangler.toml
