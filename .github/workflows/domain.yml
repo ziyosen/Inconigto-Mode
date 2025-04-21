@@ -1,0 +1,70 @@
+name: Update Wrangler Configuration
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_domain_value:
+        description: 'Nilai domain baru yang akan ditambahkan ke wrangler.toml'
+        required: true
+        type: string
+
+jobs:
+  update-config:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Update wrangler.toml
+      run: |
+        # Membuat backup file original
+        cp wrangler.toml wrangler.toml.backup
+        
+        # Memeriksa apakah file wrangler.toml ada
+        if [ ! -f wrangler.toml ]; then
+          echo "File wrangler.toml tidak ditemukan!"
+          exit 1
+        fi
+        
+        # Membaca file wrangler.toml
+        content=$(cat wrangler.toml)
+        
+        # Mencari posisi kurung tutup terakhir
+        last_bracket_line=$(grep -n "]" wrangler.toml | tail -1 | cut -d: -f1)
+        
+        # Membuat file sementara dengan konten hingga baris sebelum kurung tutup
+        head -n $((last_bracket_line - 1)) wrangler.toml > wrangler.toml.new
+        
+        # Menambahkan routes baru dengan nilai domain baru
+        echo "" >> wrangler.toml.new
+        echo "  { pattern = \"${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"ava.game.naver.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"quiz.int.vidio.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"graph.instagram.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"zaintest.vuclip.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"support.zoom.us.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        echo "  { pattern = \"cache.netflix.com.${{ github.event.inputs.new_domain_value }}\", custom_domain = true }," >> wrangler.toml.new
+        
+        # Menambahkan kurung tutup
+        echo "]" >> wrangler.toml.new
+        
+        # Mengganti file asli dengan file baru
+        mv wrangler.toml.new wrangler.toml
+        
+        # Menampilkan file yang telah diupdate untuk verifikasi
+        echo "File wrangler.toml setelah diupdate:"
+        cat wrangler.toml
+    
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add wrangler.toml
+        git commit -m "Add new domain value: ${{ github.event.inputs.new_domain_value }}"
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
