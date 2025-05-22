@@ -26,7 +26,7 @@ command = "cargo install -q worker-build && worker-build --release"
 build = { command = "cargo install -q worker-build && worker-build --dev" }
 
 [vars]
-UUID = "e3de531a-c5c2-4254-89cc-63cb4600bb3b"
+UUID = "cf060b69-bee4-492a-94c1-a6f457291cdf"
 MAIN_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/index.html"
 SUB_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/sub.html"
 LINK_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/link.html"
