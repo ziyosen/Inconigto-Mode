@@ -27,7 +27,7 @@ build = { command = "cargo install -q worker-build && worker-build --dev" }
 
 [vars]
 UUID = "cf060b69-bee4-492a-94c1-a6f457291cdf"
-MAIN_PAGE_URL = "https://raw.githubusercontent.com/InconigtoMode/Inconigto-Mode/refs/heads/master/web/index.html"
-SUB_PAGE_URL = "https://raw.githubusercontent.com/InconigtoMode/Inconigto-Mode/refs/heads/master/web/sub.html"
-LINK_PAGE_URL = "https://raw.githubusercontent.com/InconigtoMode/Inconigto-Mode/refs/heads/master/web/link.html"
-CONVERTER_PAGE_URL = "https://raw.githubusercontent.com/InconigtoMode/Inconigto-Mode/refs/heads/master/web/converter.html"
+MAIN_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/index.html"
+SUB_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/sub.html"
+LINK_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/link.html"
+CONVERTER_PAGE_URL = "https://raw.githubusercontent.com/ziyosen/Inconigto-Mode/refs/heads/master/web/converter.html"
