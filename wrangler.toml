@@ -14,6 +14,29 @@ routes = [
   { pattern = "support.zoom.us.benxx.dpdns.org", custom_domain = true },
   { pattern = "cache.netflix.com.benxx.dpdns.org", custom_domain = true },
 
+  { pattern = "benxx.dpdns.org", custom_domain = true },
+  { pattern = "ava.game.naver.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "graph.instagram.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "zaintest.vuclip.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "support.zoom.us.benxx.dpdns.org", custom_domain = true },
+  { pattern = "cache.netflix.com.benxx.dpdns.org", custom_domain = true },
+
+  { pattern = "benxx.dpdns.org", custom_domain = true },
+  { pattern = "ava.game.naver.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "graph.instagram.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "zaintest.vuclip.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "support.zoom.us.benxx.dpdns.org", custom_domain = true },
+  { pattern = "cache.netflix.com.benxx.dpdns.org", custom_domain = true },
+
+  { pattern = "benxx.dpdns.org", custom_domain = true },
+  { pattern = "ava.game.naver.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "graph.instagram.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "zaintest.vuclip.com.benxx.dpdns.org", custom_domain = true },
+  { pattern = "support.zoom.us.benxx.dpdns.org", custom_domain = true },
+  { pattern = "cache.netflix.com.benxx.dpdns.org", custom_domain = true },
 ]
 
 [[kv_namespaces]]
